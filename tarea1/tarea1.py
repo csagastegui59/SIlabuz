@@ -23,12 +23,12 @@ class Libro:
     def search_isbn_titulo(books):
         listBooks = books.open_csv()
         print(f"Se puede realizar la busqueda por ISBN o por el título de los libros")
-        selection = input("Ingrese el ISBN o título a buscar: ")
+        selection =" " + input("Ingrese el ISBN o título a buscar: ")
         for i in listBooks:
-            if str(i[1]) == selection:
+            if i[1] == selection or i[3] == selection:
                 print(f"{i[0]} - {i[1]} - {i[2]} - {i[3]} - {i[4]} - {i[5]}")
 
 q = Libro()
-q.open_csv()
-q.show_books()
+#q.open_csv()
+#q.show_books()
 q.search_isbn_titulo()
