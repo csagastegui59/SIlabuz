@@ -1,5 +1,7 @@
 import csv
 
+lista = []
+
 def menu():
     seleccion = 0
     while seleccion != 11:
@@ -41,7 +43,12 @@ def menu():
             salir()
     
 def leer_archivo():
-    pass
+    with open('tarea1\libros.csv') as file:
+        reader = csv.DictReader(file, delimiter = ",")
+        for row in reader:
+            lista.append(row)
+            print(f"\nId: {row['id']}  Libro:{row[' titulo']} ")
+            print(f"Género:{row[' genero']} ISBN:{row[' isbn']} Editorial:{row[' editorial']}  Autor:{row[' autor']}")
 
 def listar():
     pass
