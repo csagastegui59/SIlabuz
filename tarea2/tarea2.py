@@ -40,7 +40,31 @@ class Pokemon:
         pass
 
     def poke_abilities(self):
-        pass
+        print("\nOpción 3: Listar pokemons por habilidad.")
+        url_ability = str(self.pokeapi_url +'/ability/')
+        n_totalability = requests.get(url_ability).json()['count']
+        print(f"\nDebemos mencionar que en el mundo pokemon existen un total de {int(n_totalability)} habilidades")
+        print(f"Las cuales son las siguientes: \n")
+        count = 10000
+        for i in range(1,int(n_totalability)+1):
+            if i > 267:
+                count += 1
+                name_ability = requests.get(url_ability+str(count)).json()["name"]
+                print(f"{count}: {name_ability}")
+            else: 
+                name_ability = requests.get(url_ability+str(i)).json()["name"]
+                print(f"{i}: {name_ability}")
+        
+        ability = int(input("\nIngrese el número de la habilidad que quiera consultar: "))
+        list_pokemons = requests.get(url_ability + str(ability)).json()['pokemon']
+        print(f"\nPokemon con esta habilidad: {len(list_pokemons)}\n")
+        lista = []
+        for pokemon in list_pokemons:
+            if int(ability) > 267:
+                lista.append(list_pokemons)
+            else:
+                lista.append(pokemon['pokemon']['name'])
+        print(lista)
 
     def poke_habitat(self):
         pass
