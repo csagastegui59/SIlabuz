@@ -1,6 +1,9 @@
 import csv
 
-lista = []
+class Libros:
+    def __init__(self, archivo = 'libros.csv'):
+        self.archivo = archivo
+        self.lista = []
 
 def menu():
     seleccion = 0
