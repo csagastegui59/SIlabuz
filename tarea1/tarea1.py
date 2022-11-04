@@ -4,6 +4,7 @@ class Libros:
     def __init__(self, archivo = 'tarea1\libros.csv'):
         self.archivo = archivo
         self.lista = []
+        self.fieldnames = ['id', ' titulo', ' genero', ' isbn', ' editorial', ' autor']
 
     def menu(self):
         seleccion = 0
@@ -57,7 +58,18 @@ class Libros:
         pass
 
     def agregar(self):
-        pass
+        count = len(self.lista)
+        titulo = input("Ingrese titulo del libro: ")
+        genero = input("Ingrese género del libro: ")
+        isbn = int(input("Ingrese ISBN del libro: "))
+        editorial = input("Ingrese editorial: ")
+        autor = input("Ingrese autor: ")
+        dc = {'id': count+1, ' titulo': titulo, ' genero': genero , ' isbn': isbn , ' editorial': editorial, ' autor': autor}
+        self.lista.append(dc)
+        with open(self.archivo, 'w', encoding="utf-8",newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=self.fieldnames)
+            writer.writeheader()
+            writer.writerows(self.lista)
 
     def eliminar(self):
         pass
