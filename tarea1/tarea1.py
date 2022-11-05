@@ -4,6 +4,11 @@ class Libros:
     def __init__(self, archivo = 'tarea1\libros.csv'):
         self.archivo = archivo
         self.lista = []
+        self.lista = []
+        with open(self.archivo, 'r', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                self.lista.append(row)
         self.fieldnames = ['id', ' titulo', ' genero', ' isbn', ' editorial', ' autor']
 
     def menu(self):
@@ -47,12 +52,9 @@ class Libros:
                 self.salir()
         
     def leer_archivo(self):
-        with open(self.archivo, 'r', encoding='utf-8') as file:
-            reader = csv.DictReader(file, delimiter = ",")
-            for row in reader:
-                self.lista.append(row)
-                print(f"\nId: {row['id']}  Libro:{row[' titulo']} ")
-                print(f"Género:{row[' genero']} ISBN:{row[' isbn']} Editorial:{row[' editorial']}  Autor:{row[' autor']}")
+        for row in self.lista:
+            print(f"\nId: {row['id']}  Libro:{row[' titulo']} ")
+            print(f"Género:{row[' genero']} ISBN:{row[' isbn']} Editorial:{row[' editorial']}  Autor:{row[' autor']}")
 
     def listar(self):
         pass
