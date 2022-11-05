@@ -67,7 +67,21 @@ class Pokemon:
         print(lista)
 
     def poke_habitat(self):
-        pass
+        print("\nOpción 4: Listar pokemons por habitat.")
+        url_habitat = str(self.pokeapi_url +'/pokemon-habitat/')
+        n_totalhabitat = requests.get(url_habitat).json()['results']
+        print(f"\nEn el mundo pokemon existen un total de {len(n_totalhabitat)} habitats")
+        print(f"Las cuales son las siguientes: \n")
+        for i in range(1,len(n_totalhabitat)+1):
+            name_habitat = requests.get(url_habitat+str(i)).json()["name"]
+            print(f"{i}: {name_habitat}")
+        habitat = int(input("\nIngrese el número del hábitat que quiera consultar: "))
+        list_pokemons = requests.get(url_habitat + str(habitat)).json()['pokemon_species']
+        print(f"\nLas especies de Pokemón que viven en esta hábitat son:\n")
+        lista = []
+        for pokemon in list_pokemons:
+            lista.append(pokemon['name'])
+        print(lista)
 
     def poke_type(self):
         pass
