@@ -55,6 +55,7 @@ class Libros:
         pass
 
     def listar(self):
+        print(f"\n >> OPCIÓN 2: LISTAR LIBROS <<")
         libros = pd.read_csv(self.archivo, encoding="utf-8")
         print(libros)
         pass
@@ -66,14 +67,36 @@ class Libros:
         pass
 
     def buscar_isbn_o_titulo(self):
-        listBooks = self.lista
-        print(f"Se puede realizar la busqueda por ISBN o por el título de los libros")
-        selection = input("Ingrese el ISBN o título a buscar: ")
-        for i in listBooks:
-            if i['titulo'].lower() == selection.lower() or i['isbn'] == selection:
-                print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")
+        print("\n<< OPCIÓN 5: BUSCAR LIBRO POR ISBN O POR TÍTULO >>\n")
+        listBooks = self.lista                
+        opcion = 0
+        while opcion != 3:
+            print("Puede realizar la busqueda por ISBN o por el título de los libros \n")
+            print("1.- Busqueda por ISBN")
+            print("2.- Busqueda por Título")
+            print("3.- Finalizar")
+            opcion = int(input("\n Escoja la opción: "))
+            if opcion == 1:
+                selection = input("\n Ingrese el ISBN que quiere buscar: ")
+                print("\n")
+                for i in listBooks:
+                    if i['isbn'] == selection:
+                        print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")        
+                print("\n")
+
+            elif opcion == 2:
+                selection = input("\n Ingrese el título que quiere buscar: ")
+                print("\n")
+                for i in listBooks:
+                    if i['titulo'].lower() == selection.lower() or i['isbn'] == selection:
+                        print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")
+                print("\n")
+
+            elif opcion == 3:
+                print("\n<< FIN DE LAS CONSULTAS >>")
 
     def ordenar_titulo(self):
+        print(f"\n >> OPCIÓN 6: ORDENAR LIBROS POR TÍTULO << \n")
         listBooks = self.lista
         libros = [row['titulo'] for row in listBooks]
         libros.sort()
@@ -81,6 +104,7 @@ class Libros:
             print(f"{i+1}: {libros[i]}")
 
     def buscar_autor_editorial_o_genero(self):
+        print(f"\n >> OPCIÓN 7: BUSCAR LIBROS POR AUTOR, EDITORIAL O GÉNERO << \n")
         listBooks = self.lista
         print(f"Pueden realizar una busqueda por autor, editorial o género de los libros")
         selection = input("Ingrese el autor, editorial o genero a buscar: ").lower()
