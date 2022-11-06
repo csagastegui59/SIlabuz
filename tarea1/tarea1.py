@@ -17,6 +17,10 @@ class Libros:
         seleccion = 0
         while seleccion != 11:
             print('''
+            Bienvenidos al programa sobre consultas de libros y sus caracteristicas
+            LIBRO-CONSULTAS v1.0
+            Elija una de las siguientes opciones:
+
             Opción 1: Leer archivo.
             Opción 2: Listar libros.
             Opción 3: Agregar libro.
