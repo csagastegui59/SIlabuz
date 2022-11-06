@@ -62,9 +62,12 @@ class Pokemon:
         for pokemon in list_pokemons:
             if int(ability) > 267:
                 lista.append(list_pokemons)
+                print(lista)
             else:
-                lista.append(pokemon['pokemon']['name'])
-        print(lista)
+                image = str(pokemon['pokemon']['url'])
+                poke_image = requests.get(image).json()['sprites']['front_default']
+                lista.append(f"- {pokemon['pokemon']['name']} : {poke_image}")
+                print(lista[-1])
 
     def poke_habitat(self):
         print("\nOpción 4: Listar pokemons por habitat.")
@@ -80,8 +83,13 @@ class Pokemon:
         print(f"\nLas especies de Pokemón que viven en esta hábitat son:\n")
         lista = []
         for pokemon in list_pokemons:
-            lista.append(pokemon['name'])
-        print(lista)
+            image = pokemon['url']
+            poke_image = requests.get(str(image)).json()['varieties']
+            for row in poke_image:
+                poke = row['pokemon']['url']
+            image_poke = requests.get(str(poke)).json()['sprites']['front_default']
+            lista.append(f"- {pokemon['name']}: {image_poke}")
+            print(lista[-1])
 
     def poke_type(self):
         pass
