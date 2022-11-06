@@ -70,13 +70,13 @@ class Libros:
         print("\n<< OPCIÓN 5: BUSCAR LIBRO POR ISBN O POR TÍTULO >>\n")
         listBooks = self.lista                
         opcion = 0
-        while opcion != 3:
+        while opcion != "3" or opcion != ' ':
             print("Puede realizar la busqueda por ISBN o por el título de los libros \n")
             print("1.- Busqueda por ISBN")
             print("2.- Busqueda por Título")
             print("3.- Finalizar")
-            opcion = int(input("\n Escoja la opción: "))
-            if opcion == 1:
+            opcion = input("\n Escoja la opción: ")
+            if opcion == "1":
                 selection = input("\n Ingrese el ISBN que quiere buscar: ")
                 print("\n")
                 for i in listBooks:
@@ -84,7 +84,7 @@ class Libros:
                         print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")        
                 print("\n")
 
-            elif opcion == 2:
+            elif opcion == "2":
                 selection = input("\n Ingrese el título que quiere buscar: ")
                 print("\n")
                 for i in listBooks:
@@ -92,8 +92,9 @@ class Libros:
                         print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")
                 print("\n")
 
-            elif opcion == 3:
+            elif opcion == "3":
                 print("\n<< FIN DE LAS CONSULTAS >>")
+                break
 
     def ordenar_titulo(self):
         print(f"\n >> OPCIÓN 6: ORDENAR LIBROS POR TÍTULO << \n")
