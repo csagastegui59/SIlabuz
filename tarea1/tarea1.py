@@ -4,7 +4,6 @@ class Libros:
     def __init__(self, archivo = 'tarea1\libros.csv'):
         self.archivo = archivo
         self.lista = []
-        self.lista = []
         with open(self.archivo, 'r', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
@@ -92,7 +91,14 @@ class Libros:
         pass
 
     def guardar(self):
-        pass
+        #Guradar libros en archivo
+        my_path = 'nuevo_libro.csv'
+        with open(my_path, 'w', encoding="utf-8",newline='') as file:
+            writer = csv.DictWriter(file,fieldnames=self.fieldnames,delimiter='|')
+            writer.writeheader()
+            writer.writerows(self.lista)
+        file.close()
+        print("Se han guardado los datos en un nuevo archivo.")
 
     def salir(self):
         pass
