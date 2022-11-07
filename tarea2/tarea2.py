@@ -2,6 +2,7 @@ import requests
 import json
 import time
 
+
 class Pokemon:
     def __init__(self, pokeapi_url):
         self.pokeapi_url = pokeapi_url
@@ -55,16 +56,62 @@ class Pokemon:
             pokemons = [pokemon['name'] for pokemon in list_pokemons]
         print(pokemons)
         print("\n")
-        time.sleep(2) 
+        time.sleep(2)  
 
     def poke_form(self):
         pass
 
     def poke_abilities(self):
-        pass
+        print("\nOpción 3: Listar pokemons por habilidad.")
+        url_ability = str(self.pokeapi_url +'/ability/')
+        n_totalability = requests.get(url_ability).json()['count']
+        print(f"\nDebemos mencionar que en el mundo pokemon existen un total de {int(n_totalability)} habilidades")
+        print(f"Las cuales son las siguientes: \n")
+        count = 10000
+        for i in range(1,int(n_totalability)+1):
+            if i > 267:
+                count += 1
+                name_ability = requests.get(url_ability+str(count)).json()["name"]
+                print(f"{count}: {name_ability}")
+            else: 
+                name_ability = requests.get(url_ability+str(i)).json()["name"]
+                print(f"{i}: {name_ability}")
+        
+        ability = int(input("\nIngrese el número de la habilidad que quiera consultar: "))
+        list_pokemons = requests.get(url_ability + str(ability)).json()['pokemon']
+        print(f"\nPokemon con esta habilidad: {len(list_pokemons)}\n")
+        lista = []
+        for pokemon in list_pokemons:
+            if int(ability) > 267:
+                lista.append(list_pokemons)
+                print(lista)
+            else:
+                image = str(pokemon['pokemon']['url'])
+                poke_image = requests.get(image).json()['sprites']['front_default']
+                lista.append(f"- {pokemon['pokemon']['name']} : {6}")
+                print(lista[-1])
 
     def poke_habitat(self):
-        pass
+        print("\nOpción 4: Listar pokemons por habitat.")
+        url_habitat = str(self.pokeapi_url +'/pokemon-habitat/')
+        n_totalhabitat = requests.get(url_habitat).json()['results']
+        print(f"\nEn el mundo pokemon existen un total de {len(n_totalhabitat)} habitats")
+        print(f"Las cuales son las siguientes: \n")
+        for i in range(1,len(n_totalhabitat)+1):
+            name_habitat = requests.get(url_habitat+str(i)).json()["name"]
+            print(f"{i}: {name_habitat}")
+        habitat = int(input("\nIngrese el número del hábitat que quiera consultar: "))
+        list_pokemons = requests.get(url_habitat + str(habitat)).json()['pokemon_species']
+        print(f"\nLas especies de Pokemón que viven en esta hábitat son:\n")
+        lista = []
+        for pokemon in list_pokemons:
+            image = pokemon['url']
+            poke_image = requests.get(str(image)).json()['varieties']
+            for row in poke_image:
+                poke = row['pokemon']['url']
+            image_poke = requests.get(str(poke)).json()['sprites']['front_default']
+            lista.append(f"- {pokemon['name']}: {image_poke}")
+            print(lista[-1])
 
     def poke_type(self):
         pass
