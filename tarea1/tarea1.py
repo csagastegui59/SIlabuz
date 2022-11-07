@@ -85,7 +85,11 @@ class Libros:
             writer.writerows(self.lista)
 
     def eliminar(self):
-        pass
+      print("\n<< OPCIÓN 4: ELIMINAR LIBRO >>\n")
+      option =input("\nIngrese el id del libro que desea eliminar: ")
+      for book in self.lista:
+        if (book['id'] == option):
+          self.lista.remove(book)
 
     def buscar_isbn_o_titulo(self):
         print("\n<< OPCIÓN 5: BUSCAR LIBRO POR ISBN O POR TÍTULO >>\n")
@@ -184,10 +188,41 @@ class Libros:
                 break
             
     def buscar_numero_de_autores(self):
-        pass
+      print("\n<< OPCIÓN 8: BUSCAR POR NUMERO DE AUTORES >>\n")
+      option =int(input("\nIngrese el numero de autores: "))
+      lista1 = []
+      result = []
+      with open(self.archivo, 'r', encoding='utf-8') as file:
+        reader1 = csv.DictReader(file, restkey='autor',fieldnames = ['id', 'titulo', 'genero', 'isbn', 'editorial'])
+        for row in reader1:
+          lista1.append(row)
+        lista1.pop(0)
+      for book in lista1:
+        if (len(book['autor']) == option):
+          result.append(book)
+      if len(result) == 0:
+        print('No se encontraron libros con ese numero de autores')
+      else:
+        for i in result:
+          print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")        
 
     def editar_o_actualizar(self):
-        pass
+      print("\n<< OPCIÓN 9: ACTUALIZAR LIBRO >>\n")
+      option =input("\nIngrese el id del libro que desea actualizar: ")
+      for book in self.lista:
+        if (book['id'] == option):
+          titulo = input("Ingrese titulo del libro: ")
+          genero = input("Ingrese género del libro: ")
+          isbn = input("Ingrese ISBN del libro: ")
+          editorial = input("Ingrese editorial: ")
+          autor = input("Ingrese autor: ")
+
+          book['titulo'] = titulo,
+          book['genero'] = genero,
+          book['isbn'] = isbn,
+          book['editorial'] = editorial,
+          book['autor'] = autor,
+
 
     def guardar(self):
         #Guradar libros en archivo
