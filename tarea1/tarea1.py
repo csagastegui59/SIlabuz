@@ -4,14 +4,14 @@ import time
 
 
 class Libros:
-    def __init__(self, archivo):
+    def __init__(self, archivo="Libros.csv"):
         self.archivo = archivo
         self.lista = []
         with open(self.archivo, 'r', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 self.lista.append(row)
-        self.fieldnames = ['id', ' titulo', ' genero', ' isbn', ' editorial', ' autor']
+        self.fieldnames = ['id', 'titulo', 'genero', 'isbn', 'editorial', 'autor']
 
     def menu(self):
         seleccion = 0
@@ -33,7 +33,7 @@ class Libros:
             Opción 10: Guardar libros en archivo.
             Opción 11: Salir.
             ''')
-            seleccion = int(input("Eliga una opción: "))
+            seleccion = int(input("Elija una opción: "))
             if seleccion == 1:
                 self.leer_archivo()
             if seleccion == 2:
@@ -58,7 +58,9 @@ class Libros:
                 self.salir()
         
     def leer_archivo(self):
-        pass
+        for row in self.lista:
+            print(f"\nId: {row['id']}  Libro: {row['titulo']} ")
+            print(f"Género: {row['genero']} ISBN: {row['isbn']} Editorial: {row['editorial']}  Autor: {row['autor']}")
 
     def listar(self):
         print(f"\n << OPCIÓN 2: LISTAR LIBROS >> \n")
@@ -69,7 +71,18 @@ class Libros:
         print("\n<< FIN DEL PROCESO >>")
 
     def agregar(self):
-        pass
+        count = len(self.lista)
+        titulo = input("Ingrese titulo del libro: ")
+        genero = input("Ingrese género del libro: ")
+        isbn = input("Ingrese ISBN del libro: ")
+        editorial = input("Ingrese editorial: ")
+        autor = input("Ingrese autor: ")
+        dc = {'id': count+1, 'titulo': titulo, 'genero': genero , 'isbn': isbn , 'editorial': editorial, 'autor': autor}
+        self.lista.append(dc)
+        with open(self.archivo, 'w', encoding="utf-8",newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=self.fieldnames)
+            writer.writeheader()
+            writer.writerows(self.lista)
 
     def eliminar(self):
         pass
@@ -177,12 +190,17 @@ class Libros:
         pass
 
     def guardar(self):
-        pass
+        #Guradar libros en archivo
+        my_path = 'nuevo_libro.csv'
+        with open(my_path, 'w', encoding="utf-8",newline='') as file:
+            writer = csv.DictWriter(file,fieldnames=self.fieldnames,delimiter='|')
+            writer.writeheader()
+            writer.writerows(self.lista)
+        file.close()
+        print("Se han guardado los datos en un nuevo archivo.")
 
     def salir(self):
         pass
 
-
-path_archivo = 'libros.csv'
-archivo = Libros(path_archivo)
-archivo.menu() 
+Archivo = Libros()
+Archivo.menu() 
