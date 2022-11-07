@@ -88,7 +88,7 @@ class Pokemon:
             else:
                 image = str(pokemon['pokemon']['url'])
                 poke_image = requests.get(image).json()['sprites']['front_default']
-                lista.append(f"- {pokemon['pokemon']['name']} : {6}")
+                lista.append(f"- {pokemon['pokemon']['name']} : {poke_image}")
                 print(lista[-1])
 
     def poke_habitat(self):
