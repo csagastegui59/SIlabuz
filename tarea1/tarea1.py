@@ -1,19 +1,26 @@
+import pandas as pd
 import csv
+import time
+
 
 class Libros:
-    def __init__(self, archivo = 'tarea1\libros.csv'):
+    def __init__(self, archivo="Libros.csv"):
         self.archivo = archivo
         self.lista = []
         with open(self.archivo, 'r', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 self.lista.append(row)
-        self.fieldnames = ['id', ' titulo', ' genero', ' isbn', ' editorial', ' autor']
+        self.fieldnames = ['id', 'titulo', 'genero', 'isbn', 'editorial', 'autor']
 
     def menu(self):
         seleccion = 0
         while seleccion != 11:
             print('''
+            Bienvenidos al programa sobre consultas de libros y sus caracteristicas
+            LIBRO-CONSULTAS v1.0
+            Elija una de las siguientes opciones:
+
             Opción 1: Leer archivo.
             Opción 2: Listar libros.
             Opción 3: Agregar libro.
@@ -26,7 +33,7 @@ class Libros:
             Opción 10: Guardar libros en archivo.
             Opción 11: Salir.
             ''')
-            seleccion = int(input("Eliga una opción: "))
+            seleccion = int(input("Elija una opción: "))
             if seleccion == 1:
                 self.leer_archivo()
             if seleccion == 2:
@@ -52,20 +59,25 @@ class Libros:
         
     def leer_archivo(self):
         for row in self.lista:
-            print(f"\nId: {row['id']}  Libro:{row[' titulo']} ")
-            print(f"Género:{row[' genero']} ISBN:{row[' isbn']} Editorial:{row[' editorial']}  Autor:{row[' autor']}")
+            print(f"\nId: {row['id']}  Libro: {row['titulo']} ")
+            print(f"Género: {row['genero']} ISBN: {row['isbn']} Editorial: {row['editorial']}  Autor: {row['autor']}")
 
     def listar(self):
-        pass
+        print(f"\n << OPCIÓN 2: LISTAR LIBROS >> \n")
+        time.sleep(2)
+        libros = pd.read_csv(self.archivo, encoding="utf-8")
+        print(libros)
+        time.sleep(3)
+        print("\n<< FIN DEL PROCESO >>")
 
     def agregar(self):
         count = len(self.lista)
         titulo = input("Ingrese titulo del libro: ")
         genero = input("Ingrese género del libro: ")
-        isbn = int(input("Ingrese ISBN del libro: "))
+        isbn = input("Ingrese ISBN del libro: ")
         editorial = input("Ingrese editorial: ")
         autor = input("Ingrese autor: ")
-        dc = {'id': count+1, ' titulo': titulo, ' genero': genero , ' isbn': isbn , ' editorial': editorial, ' autor': autor}
+        dc = {'id': count+1, 'titulo': titulo, 'genero': genero , 'isbn': isbn , 'editorial': editorial, 'autor': autor}
         self.lista.append(dc)
         with open(self.archivo, 'w', encoding="utf-8",newline='') as file:
             writer = csv.DictWriter(file, fieldnames=self.fieldnames)
@@ -76,14 +88,101 @@ class Libros:
         pass
 
     def buscar_isbn_o_titulo(self):
-        pass
+        print("\n<< OPCIÓN 5: BUSCAR LIBRO POR ISBN O POR TÍTULO >>\n")
+        time.sleep(1)
+        listBooks = self.lista                
+        opcion = 0
+        while opcion != "3" or opcion != ' ':
+            print("Puede realizar la busqueda por ISBN o por el título de los libros \n")
+            print("1.- Busqueda por ISBN")
+            print("2.- Busqueda por Título")
+            print("3.- Finalizar")
+            opcion = input("\n Escoja la opción: ")
+            if opcion == "1":
+                selection = input("\n Ingrese el ISBN que quiere buscar: ")
+                print("\n")
+                time.sleep(2)
+                for i in listBooks:
+                    if i['isbn'] == selection:
+                        print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")        
+                time.sleep(3)
+                print("\n")
+
+            elif opcion == "2":
+                selection = input("\n Ingrese el título que quiere buscar: ")
+                print("\n")
+                time.sleep(2)
+                for i in listBooks:
+                    if i['titulo'].lower() == selection.lower():
+                        print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")
+                time.sleep(3)
+                print("\n")
+
+            elif opcion == "3":
+                time.sleep(1)
+                print("\n<< FIN DE LAS CONSULTAS >>")
+                time.sleep(1)
+                break
 
     def ordenar_titulo(self):
-        pass
+        print(f"\n << OPCIÓN 6: ORDENAR LIBROS POR TÍTULO >> \n")
+        time.sleep(2)
+        listBooks = self.lista
+        libros = [row['titulo'] for row in listBooks]
+        libros.sort()
+        for i in range(len(libros)):
+            print(f"{i+1}: {libros[i]}")
+        time.sleep(3)
+        print("\n<< FIN DEL PROCESO >>")
 
     def buscar_autor_editorial_o_genero(self):
-        pass
+        print("\n<< OPCIÓN 7: BUSCAR LIBROS POR AUTOR, EDITORIAL O GENERO >>\n")
+        time.sleep(1)
+        listBooks = self.lista                
+        opcion = 0
+        while opcion != "4" or opcion !=' ':
+            print("Puede realizar la busqueda por autor, editorial o género de los libros \n")
+            print("1.- Búsqueda por autor")
+            print("2.- Búsqueda por editorial")
+            print("3.- Búsqueda por género")
+            print("4.- Finalizar")
+            opcion = input("\n Escoja la opción: ")
+            if opcion == "1":
+                selection = input("\n Ingrese el autor que quiere buscar: ")
+                print("\n")
+                time.sleep(2)
+                for i in listBooks:
+                    if i['autor'].lower() == selection.lower():
+                        print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")        
+                time.sleep(3)
+                print("\n")
 
+            elif opcion == "2":
+                selection = input("\n Ingrese la editorial que quiere buscar: ")
+                print("\n")
+                time.sleep(2)
+                for i in listBooks:
+                    if i['editorial'].lower() == selection.lower():
+                        print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")
+                time.sleep(3)
+                print("\n")
+            
+            elif opcion =="3":
+                selection = input("\n Ingrese el género que quiere buscar: ")
+                print("\n")
+                time.sleep(2)
+                for i in listBooks:
+                    if i['genero'].lower() == selection.lower():
+                        print(f"ID: {i['id']} | TÍTULO: {i['titulo']} | GÉNERO: {i['genero']} | ISBN: {i['isbn']} | EDITORIAL: {i['editorial']} | AUTOR: {i['autor']}")
+                time.sleep(3)
+                print("\n")
+
+            elif opcion == "4":
+                time.sleep(1)
+                print("\n<< FIN DE LAS CONSULTAS >>")
+                time.sleep(1)
+                break
+            
     def buscar_numero_de_autores(self):
         pass
 

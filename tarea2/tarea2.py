@@ -1,6 +1,7 @@
-
 import requests
 import json
+import time
+
 
 class Pokemon:
     def __init__(self, pokeapi_url):
@@ -34,7 +35,28 @@ class Pokemon:
                 self.salir()
 
     def poke_generation(self):
-        pass 
+        # Total de generaciones
+        print(f"\n >> 1.- POKEMOS POR GENERACIÓN <<")
+        url_generacion = self.pokeapi_url+'/generation/'
+        n_totalgeneration = requests.get(url_generacion).json()["results"]
+        print(f"\n Para iniciar debemos mencionar que en el mundo pokemon ")
+        print(f"existen un total de {len(n_totalgeneration)} generaciones")
+        print(f"que son los siguientes: \n")
+        for i in range(1,len(n_totalgeneration)+1):
+            name_generation = requests.get(url_generacion+str(i)).json()["main_region"]["name"]
+            print(f"{i}: {name_generation}")
+
+        # Escogemos la generación de pokemons
+        generation = input("\n Ingrese la generación de pokemons que quiere consultar: ")
+        
+        print(f"\n La lista de pokemons es el siguiente: \n")
+        time.sleep(2)
+        list_pokemons = requests.get(url_generacion + generation).json()["pokemon_species"]
+        for pokemon in list_pokemons:
+            pokemons = [pokemon['name'] for pokemon in list_pokemons]
+        print(pokemons)
+        print("\n")
+        time.sleep(2)  
 
     def poke_form(self):
         pass
@@ -66,7 +88,7 @@ class Pokemon:
             else:
                 image = str(pokemon['pokemon']['url'])
                 poke_image = requests.get(image).json()['sprites']['front_default']
-                lista.append(f"- {pokemon['pokemon']['name']} : {poke_image}")
+                lista.append(f"- {pokemon['pokemon']['name']} : {6}")
                 print(lista[-1])
 
     def poke_habitat(self):
