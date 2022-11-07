@@ -59,7 +59,18 @@ class Pokemon:
         time.sleep(2)  
 
     def poke_form(self):
-        pass
+      print(f"\n >> 1.- POKEMOS POR FORMA <<")
+      shape_url = self.pokeapi_url+'/pokemon-shape/'
+      result = requests.get(shape_url).json()["results"]
+      print(f"\n Debemos mencionar que en el mundo pokemon existen un total de {len(result)} formas de pokemon que son los siguientes: \n")
+      for i in range(0, len(result)):
+        print(f"{i+1}: {result[i]['name']}")
+      shape = input("\n Ingrese el numero correspondiente a la forma de pokemons que quiere consultar: ")
+      selected_shape = requests.get(shape_url+shape).json()['pokemon_species']
+      
+      print("Los pokemons que poseen esta forma son los siguientes: ")
+      for i in range(1,len(selected_shape)):
+        print(f"{i}: {selected_shape[i]['name']}")
 
     def poke_abilities(self):
         print("\nOpción 3: Listar pokemons por habilidad.")
@@ -114,7 +125,20 @@ class Pokemon:
             print(lista[-1])
 
     def poke_type(self):
-        pass
+      print(f"\n >> 1.- POKEMOS POR TIPO <<")
+      type_url = self.pokeapi_url+'/type/'
+      result = requests.get(type_url).json()["results"]
+      print(f"\nDebemos mencionar que en el mundo pokemon existen un total de {len(result)-1} tipos de pokemon que son los siguientes: \n")
+
+      for i in range(1,len(result)):
+        print(f"{i}: {result[i]['name']}")
+
+      type = input("\n Ingrese el numero correspondiente al tipo de pokemons que quiere consultar: ")
+      selected_type = requests.get(type_url+type).json()['pokemon']
+      
+      print("Los pokemons que poseen este tipo son los siguientes: ")
+      for i in range(1,len(selected_type)):
+        print(f"{i}: {selected_type[i]['pokemon']['name']}")
 
     def salir(self):
         pass
